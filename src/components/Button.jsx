@@ -12,7 +12,7 @@ export default props => {
     return (
         <button
                         // para garantir
-            onClick={e => props.click && props.click(e.target.innerHTML)} // Para testar, ao clicar no botton, mostrar o conteudo de cada botao no console
+            onClick={e => props.click && props.click(props.label)} // Para testar, ao clicar no botton, mostrar o conteudo de cada botao no console
             className={classes}>   {/*Passando as classes para se estilizar  */}
             {props.label}
         </button>
