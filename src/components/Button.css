@@ -12,18 +12,22 @@
     outline: none;
 }
 
+/* Pseudo-classe css */
 .button:active{
     background-color: #ccc;
 }
 
+/* Ocupa 2 espaços */
 .button.double {
     grid-column: span 2;
 }
 
+/* Ocupa 3 espaços */
 .button.triple {
     grid-column: span 3;
 }
 
+/* Botões de operacao estilizados */
 .button.operation {
     background-color: #fa8231;
     color: #fff;

@@ -1,3 +1,24 @@
+// 0 #componente Button 
+// import React, { Component } from "react" //importando 'Component' para classe
+// import './Calculator.css' //importando o css
+
+// //importando o botao e display
+// import Button from '../components/Button'
+// import Display from '../components/Display'
+
+// export default class Calculator extends Component {
+
+//     render() {
+//         return(
+//             <div className="calculator">
+//                 <Button />
+//             </div>
+//             /* Como isso é JSX, nao podemos usar a palavra reservada "class" do JS,
+//  entao resolvemos isso com "className" */
+//         )
+//     }
+// }
+
 // 1 #componente Button
 // import React, { Component } from "react" //importando 'Component' para classe
 // import './Calculator.css' //importando o css
@@ -77,18 +98,18 @@ import Display from '../components/Display'
 
 //Estado inicial da calculadora, com propósito de restaurar
 const initialState = {
-    displayValue: '0',      // valor a ser exibido no display
+    displayValue: '0',     // valor a ser exibido no display
     clearDisplay: false,    // Uma propriedade pra dizer se precisa ou nao limpar o display
     operation: null,        // Armazenar as operaçoes
     values: [0, 0],          // Array com 2 valores para armazenar as informaçoes a serem operadas
     current: 0              // Escolher o indice do array ( 0 ou 1)
-
 }
 
-
-// Usando uma classe por aqui porque usaremos states nos componentes. OBS: Devemos evitar colocar states em varios componentes,
+//Usando uma classe por aqui porque usaremos states no componentes. OBS: Devemos evitar colocar states em varios componentes,
 // focando esse controle em poucos componentes para o gerenciamento ser mais simples.
 export default class Calculator extends Component {
+
+
     // estado, recebe tudo pelo operador Spread ( criou um clone de "initialState")
     state = { ...initialState }
 
@@ -109,7 +130,10 @@ export default class Calculator extends Component {
 
     // # logica 2
     //Nessa funçao só entra operaçoes
-    setOperation(operation) { // Uma OBS: Ao setar operacao devemos manipular o array "values" no indice 1, pois o indice 0 ja terá algo inserido -> values: [0, 0]
+    setOperation(operation) { 
+        // Uma OBS: Ao setar operacao devemos manipular o array "values" no indice 1,
+        // pois o indice 0 ja terá algo inserido -> values: [0, 0]
+        
         if (this.state.current === 0) {  //verificando se o indice está no 0 
             this.setState({ operation, current: 1, clearDisplay: true }) // Passa o operation , seta o current para 1 e limpa o display
 
@@ -123,16 +147,21 @@ export default class Calculator extends Component {
                 //A função eval() computa um código JavaScript representado como uma string.
                 //Uso de template String -> ` ${ } ` // Envolvido por acentos graves que é prenchido por strings e o ${ } significa interpolacao de expressoes JS
                 values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`) // Estou manipulando os valores dos 2 indices (0,1) e fazendo a operacao entre eles, depois guarda-se tudo isso no indice 0, para desocupar o indice 1
-            
+
                 if (isNaN(values[0]) || !isFinite(values[0])) { // Reseta caso resulte em NaN.
                     this.clearMemory()
-                return
+                    return
                 }
 
             } catch (e) { //Caso dê um erro, tratar dessa forma
                 values[0] = this.state.values[0] //Retorno para o valor que estava antes do try{}
             }
             values[1] = 0 // Desocupando o indice 1
+            // values[0] = values[0].toPrecision(8)
+
+            if ((values[0] % 2) != 0) { // se resto for = 0 
+                values[0] = values[0].toPrecision(8) // toPrecision() para limitar o comprimento total
+            }
 
             this.setState({
                 displayValue: values[0], // resultado da operacao passa para o display
